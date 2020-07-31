@@ -1,0 +1,357 @@
+CS207 DBMS LAB.
+     
+      Database2 -> Given below the database schema for a Student-Library scenario.
+#i
+     create the tables with the appropriate integrity constraints.
+
+#ii
+     insert sufficient records in each of tables ?
+ 
+    STUDENT TABLE
+
+  select * from student;
++---------+----------------+
+| stud_no | stud_name      |
++---------+----------------+
+|      10 | preetam        |
+|      11 | raju           |
+|      13 | sita           |
+|      14 | gita           |
+|      15 | rani           |
+|      16 | karan          |
+|      17 | akash          |
+|      18 | mohit          |
+|      19 | manish         |
+|      20 | shradha_kapoor |
+|      21 | preetam        |
+|      22 | raja           |
+|      23 | karan          |
+|      24 | anand          |
+|      25 | abhijeet       |
+|      26 | aditya         |
++---------+----------------+
+16 rows in set (0.00 sec)
+
+
+  MEMBERSHIP TABLE
+
+  select * from membership;
++---------+---------+
+| card_no | stud_no |
++---------+---------+
+|     100 | 10      |
+|     101 | 20      |
+|     100 | 10      |
+|     103 | 12      |
+|     104 | 14      |
+|     103 | 12      |
+|     103 | 12      |
+|     104 | 14      |
+|     108 | 18      |
+|     109 | 15      |
+|     110 | 19      |
+|     109 | 15      |
+|     108 | 18      |
+|     113 | 16      |
+|     114 | 17      |
+|     115 | 11      |
+|     116 | 13      |
+|     102 | 21      |
+|     105 | 22      |
+|     106 | 23      |
+|     107 | 24      |
+|     112 | 25      |
+|     111 | 26      |
++---------+---------+
+23 rows in set (0.00 sec)
+
+               BOOK TABLE
+
+    select * from book;
++---------+----------------------+-----------------+
+| book_no | book_name            | string_auther   |
++---------+----------------------+-----------------+
+|     200 | half girlfriend      | chetam bhagat   |
+|     201 | story of young  girl | anne frank      |
+|     202 | gulliver's travels   | jonathan swift  |
+|     206 | a suitable boy       | bikram seth     |
+|     207 | three idiots         | chetan bhagat   |
+|     203 | god of small things  | aruhthati roy   |
+|     204 | shadow lines         | amitav shosh    |
+|     205 | fasting,feasting     | anita desai     |
+|     208 | train to pakistan    | khushwant singh |
+|     209 | the company of women | khushwant singh |
+|     210 | dear kitty           | anne frank      |
++---------+----------------------+-----------------+
+11 rows in set (0.00 sec)
+
+       
+           ISS_REC TABLE
+
+  select * from iss_rec; 
++--------+------------+--------+---------+
+| iss_no | iss_date   | mem_no | book_no |
++--------+------------+--------+---------+
+|    300 | 2018-01-01 |    100 |     210 |
+|    301 | 2018-01-02 |    116 |     210 |
+|    302 | 2018-01-03 |    116 |     201 |
+|    303 | 2018-01-03 |    110 |     209 |
+|    304 | 2018-01-05 |    110 |     206 |
+|    305 | 2018-01-05 |    105 |     204 |
+|    306 | 2018-01-06 |    115 |     204 |
+|    307 | 2018-01-06 |    101 |     208 |
+|    308 | 2018-01-06 |    104 |     207 |
+|    309 | 2018-01-06 |    111 |     203 |
+|    310 | 2018-01-07 |    114 |     208 |
+|    311 | 2018-01-07 |    109 |     203 |
+|    312 | 2018-01-07 |    106 |     205 |
+|    313 | 2018-01-08 |    113 |     202 |
+|    314 | 2018-01-08 |    107 |     202 |
+|    315 | 2018-01-08 |    112 |     207 |
+|    316 | 2018-01-08 |    108 |     204 |
+|    317 | 2018-01-08 |    106 |     207 |
+|    318 | 2018-01-09 |    103 |     201 |
+|    319 | 2018-01-10 |    102 |     208 |
++--------+------------+--------+---------+
+20 rows in set (0.00 sec)
+
+#iii
+        List all the student names with their membership numbers?
+#ANSWER 
+        select distinct s.stud_name,m.card_no from student s INNER JOIN 
+        membership m on s.stud_no=m.stud_no;
+#OUTPUT
+
++----------------+---------+
+| stud_name      | card_no |
++----------------+---------+
+| preetam        |     100 |
+| shradha_kapoor |     101 |
+| gita           |     104 |
+| mohit          |     108 |
+| rani           |     109 |
+| manish         |     110 |
+| karan          |     113 |
+| akash          |     114 |
+| raju           |     115 |
+| sita           |     116 |
+| preetam        |     102 |
+| raja           |     105 |
+| karan          |     106 |
+| anand          |     107 |
+| abhijeet       |     112 |
+| aditya         |     111 |
++----------------+---------+
+16 rows in set (0.00 sec)
+
+
+#iv
+        Create a view which lists the daily issues-date wise for the last one week?  
+#ANSWER
+        
+        create view last_one_week_issue_details as select                         i.iss_date ,i.iss_no ,i.mem_no ,i.book_no ,b.book_name ,b.string_auther ,m.card_no ,m.stud_no ,s.stud_name 
+from iss_rec i inner join book b on i.book_no=b.book_no inner join membership m on m.card_no=i.mem_no 
+inner join student s on s.stud_no=m.stud_no where 
+i.iss_date >="2018-01-03" and i.iss_date<="2018-01-10" order by i.iss_date;
+
+#OUTPUT
+
++------------+--------+--------+---------+----------------------+-----------------+---------+---------+----------------+
+| iss_date   | iss_no | mem_no | book_no | book_name            | string_auther   | card_no | stud_no | stud_name      |
++------------+--------+--------+---------+----------------------+-----------------+---------+---------+----------------+
+| 2018-01-03 |    302 |    116 |     201 | story of young  girl | anne frank      |     116 | 13      | sita           |
+| 2018-01-03 |    303 |    110 |     209 | the company of women | khushwant singh |     110 | 19      | manish         |
+| 2018-01-05 |    304 |    110 |     206 | a suitable boy       | bikram seth     |     110 | 19      | manish         |
+| 2018-01-05 |    305 |    105 |     204 | shadow lines         | amitav shosh    |     105 | 22      | raja           |
+| 2018-01-06 |    309 |    111 |     203 | god of small things  | aruhthati roy   |     111 | 26      | aditya         |
+| 2018-01-06 |    307 |    101 |     208 | train to pakistan    | khushwant singh |     101 | 20      | shradha_kapoor |
+| 2018-01-06 |    308 |    104 |     207 | three idiots         | chetan bhagat   |     104 | 14      | gita           |
+| 2018-01-06 |    306 |    115 |     204 | shadow lines         | amitav shosh    |     115 | 11      | raju           |
+| 2018-01-06 |    308 |    104 |     207 | three idiots         | chetan bhagat   |     104 | 14      | gita           |
+| 2018-01-07 |    312 |    106 |     205 | fasting,feasting     | anita desai     |     106 | 23      | karan          |
+| 2018-01-07 |    310 |    114 |     208 | train to pakistan    | khushwant singh |     114 | 17      | akash          |
+| 2018-01-07 |    311 |    109 |     203 | god of small things  | aruhthati roy   |     109 | 15      | rani           |
+| 2018-01-07 |    311 |    109 |     203 | god of small things  | aruhthati roy   |     109 | 15      | rani           |
+| 2018-01-08 |    315 |    112 |     207 | three idiots         | chetan bhagat   |     112 | 25      | abhijeet       |
+| 2018-01-08 |    317 |    106 |     207 | three idiots         | chetan bhagat   |     106 | 23      | karan          |
+| 2018-01-08 |    316 |    108 |     204 | shadow lines         | amitav shosh    |     108 | 18      | mohit          |
+| 2018-01-08 |    313 |    113 |     202 | gulliver's travels   | jonathan swift  |     113 | 16      | karan          |
+| 2018-01-08 |    314 |    107 |     202 | gulliver's travels   | jonathan swift  |     107 | 24      | anand          |
+| 2018-01-08 |    316 |    108 |     204 | shadow lines         | amitav shosh    |     108 | 18      | mohit          |
+| 2018-01-10 |    319 |    102 |     208 | train to pakistan    | khushwant singh |     102 | 21      | preetam        |
++------------+--------+--------+---------+----------------------+-----------------+---------+---------+----------------+
+20 rows in set (0.01 sec)
+
+
+#v
+        List all the issues for the current date wiht student and book names ?
+#ANSWER
+        select i.iss_no,b.book_name,s.stud_name, i.mem_no from iss_rec i inner join 
+        book b on i.book_no=b.book_no  inner join 
+        membership m on m.card_no=i.mem_no inner join 
+        student s on s.stud_no=m.stud_no where iss_date="2018-01-08";
+#OUTPUT
+
++--------+--------------------+-----------+--------+
+| iss_no | book_name          | stud_name | mem_no |
++--------+--------------------+-----------+--------+
+|    313 | gulliver's travels | karan     |    113 |
+|    316 | shadow lines       | mohit     |    108 |
+|    316 | shadow lines       | mohit     |    108 |
+|    317 | three idiots       | karan     |    106 |
+|    314 | gulliver's travels | anand     |    107 |
+|    315 | three idiots       | abhijeet  |    112 |
++--------+--------------------+-----------+--------+
+6 rows in set (0.04 sec)
+
+#vi
+        Create a view which lists out the iss_no, iss_date, stud_name ,book name ?     
+#ANSWER
+        create view view_issue_detail as select i.iss_no,i.iss_date,s.stud_name,
+        b.book_name from iss_rec i inner join membership 
+        m on i.mem_no=m.card_no inner join student 
+        s on s.stud_no=m.stud_no inner join book 
+        b on b.book_no=i.book_no;
+#OUTPUT
+
++--------+------------+----------------+----------------------+
+| iss_no | iss_date   | stud_name      | book_name            |
++--------+------------+----------------+----------------------+
+|    300 | 2018-01-01 | preetam        | dear kitty           |
+|    300 | 2018-01-01 | preetam        | dear kitty           |
+|    306 | 2018-01-06 | raju           | shadow lines         |
+|    301 | 2018-01-02 | sita           | dear kitty           |
+|    302 | 2018-01-03 | sita           | story of young  girl |
+|    308 | 2018-01-06 | gita           | three idiots         |
+|    308 | 2018-01-06 | gita           | three idiots         |
+|    311 | 2018-01-07 | rani           | god of small things  |
+|    311 | 2018-01-07 | rani           | god of small things  |
+|    313 | 2018-01-08 | karan          | gulliver's travels   |
+|    310 | 2018-01-07 | akash          | train to pakistan    |
+|    316 | 2018-01-08 | mohit          | shadow lines         |
+|    316 | 2018-01-08 | mohit          | shadow lines         |
+|    303 | 2018-01-03 | manish         | the company of women |
+|    304 | 2018-01-05 | manish         | a suitable boy       |
+|    307 | 2018-01-06 | shradha_kapoor | train to pakistan    |
+|    319 | 2018-01-10 | preetam        | train to pakistan    |
+|    305 | 2018-01-05 | raja           | shadow lines         |
+|    312 | 2018-01-07 | karan          | fasting,feasting     |
+|    317 | 2018-01-08 | karan          | three idiots         |
+|    314 | 2018-01-08 | anand          | gulliver's travels   |
+|    315 | 2018-01-08 | abhijeet       | three idiots         |
+|    309 | 2018-01-06 | aditya         | god of small things  |
++--------+------------+----------------+----------------------+
+23 rows in set (0.00 sec)
+
+#vii
+        List the detail of student who borrowed book whose auther is "chetan bhagat" ?
+#ANSWER
+        select s.stud_no,s.stud_name,m.card_no from iss_rec i inner join  
+        book b on  b.book_no=i.book_no  inner join 
+        membership m on m.card_no=i.mem_no inner join 
+        student s on s.stud_no=m.stud_no where b.string_auther= "chetan bhagat";
+#OUTPUT
+
++---------+-----------+---------+
+| stud_no | stud_name | card_no |
++---------+-----------+---------+
+|      14 | gita      |     104 |
+|      23 | karan     |     106 |
+|      25 | abhijeet  |     112 |
++---------+-----------+---------+
+3 rows in set (0.00 sec)
+
+
+#viii
+        Give a list of books taken by student with stud_no as 5 ?
+#ANSWER
+        select b.book_name from book b inner join 
+        iss_rec i on  i.book_no=b.book_no inner join 
+        membership m on m.card_no=i.mem_no inner join 
+        student s on s.stud_no=m.stud_no where s.stud_no=26;
+
+#ix
+       Give a count of how many books have been bought by each student ?
+#ANSWER
+        select m.stud_no,count(i.book_no) from membership m join 
+        iss_rec i on m.card_no=i.mem_no group by m.stud_no;
+#OUTPUT
+       
++---------+------------------+
+| stud_no | count(i.book_no) |
++---------+------------------+
+| 10      |                2 |
+| 11      |                1 |
+| 12      |                3 |
+| 13      |                2 |
+| 14      |                2 |
+| 15      |                2 |
+| 16      |                1 |
+| 17      |                1 |
+| 18      |                2 |
+| 19      |                2 |
+| 20      |                1 |
+| 21      |                1 |
+| 22      |                1 |
+| 23      |                2 |
+| 24      |                1 |
+| 25      |                1 |
+| 26      |                1 |
++---------+------------------+
+17 rows in set (0.00 sec)
+
+
+#x
+        List the book details which are issued as of today ?
+#ANSWER
+        select b.book_no,b.book_name,b.string_auther from book
+        b join iss_rec i on i.book_no=b.book_no where 
+        iss_date="2018-01-08";
+#OUTPUT
+
++---------+------------------+
+| stud_no | count(i.book_no) |
++---------+------------------+
+| 10      |                2 |
+| 11      |                1 |
+| 12      |                3 |
+| 13      |                2 |
+| 14      |                2 |
+| 15      |                2 |
+| 16      |                1 |
+| 17      |                1 |
+| 18      |                2 |
+| 19      |                2 |
+| 20      |                1 |
+| 21      |                1 |
+| 22      |                1 |
+| 23      |                2 |
+| 24      |                1 |
+| 25      |                1 |
+| 26      |                1 |
++---------+------------------+
+17 rows in set (0.00 sec)
+        
+/*
+
+##following query is very important
+select b.book_no,b.book_name,b.string_auther, 
+count(b.book_no) from book b inner join 
+iss_rec i on i.book_no=b.book_no 
+where iss_date="2018-01-08" 
+group by b.book_no,b.book_name,b.string_auther;
+
+##
+select b.book_no,b.book_name,b.string_auther from book 
+b inner join iss_rec i on i.book_no=b.book_no 
+where iss_date="2018-01-08" 
+group by b.book_no,b.book_name,b.string_auther;
+
+
+##
+select s.stud_name from student s where 
+s.stud_no in (select m.stud_no from membership m join 
+iss_rec i on m.card_no=i.mem_no group by m.stud_no);
+
+
+*/

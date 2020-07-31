@@ -1,0 +1,20 @@
++---------+------------------+
+| cust_id | cust_name        |
++---------+------------------+
+|      80 | the_transporter  |
+|      81 | harrypotter      |
+|      82 | jasonstathan     |
+|      84 | raj_singhaniya   |
+|      83 | preetam          |
+|      85 | raj_singhaniya   |
+|      86 | king_kong        |
+|      87 | drakula          |
+|      88 | kajol_agrawal    |
+|      89 | kristian_stibert |
+|      90 | karan            |
+|      91 | karan            |
++---------+------------------+
+12 rows in set (0.00 sec)
+
+
+

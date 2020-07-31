@@ -1,0 +1,41 @@
+#question 3 list all bills for current date with the customer names and item numbers
+#command  
+select s.bill_no ,s.bill_date,s.item_id ,s.qty_sold, c.cust_name from 
+(sale s left join customer c on c.cust_id=s.item_id) where s.bill_date="2018-01-07";
+
+#output
++---------+------------+---------+----------+------------------+
+| bill_no | bill_date  | item_id | qty_sold | cust_name        |
++---------+------------+---------+----------+------------------+
+|      11 | 2018-01-07 |      10 |       13 | kristian_stibert |
+|      10 | 2018-01-07 |      21 |       27 | NULL             |
+|      12 | 2018-01-07 |      22 |       45 | NULL             |
++---------+------------+---------+----------+------------------+
+
+#question 4 create a view which lists the daily sales date wise for the last one week
+#command 
+create view last_week_sale_view as select bill_no, bill_date,item_id ,qty_sold from 
+sale where  bill_date in ("2018-01-01","2018-01-02","2018-01-03","2018-01-04",
+"2018-01-04","2018-01-05","2018-01-06","2018-01-07");
+
+#output
++---------+------------+---------+----------+
+| bill_no | bill_date  | item_id | qty_sold |
++---------+------------+---------+----------+
+|       1 | 2018-01-01 |       4 |       12 |
+|       2 | 2018-01-02 |       4 |       13 |
+|       3 | 2018-01-03 |       3 |       14 |
+|       4 | 2018-01-04 |       7 |       12 |
+|       5 | 2018-01-05 |       7 |       13 |
+|       6 | 2018-01-06 |       3 |       14 |
+|       7 | 2018-01-06 |      20 |       25 |
+|       8 | 2018-01-06 |      10 |       13 |
+|       9 | 2018-01-06 |      85 |       45 |
+|      10 | 2018-01-07 |      21 |       27 |
+|      11 | 2018-01-07 |      10 |       13 |
+|      12 | 2018-01-07 |      22 |       45 |
++---------+------------+---------+----------+
+
+#question 5 
+
+

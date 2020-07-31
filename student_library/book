@@ -1,0 +1,16 @@
++---------+----------------------+-----------------+
+| book_no | book_name            | string_auther   |
++---------+----------------------+-----------------+
+|     200 | half girlfriend      | chetam bhagat   |
+|     201 | story of young  girl | anne frank      |
+|     202 | gulliver's travels   | jonathan swift  |
+|     206 | a suitable boy       | bikram seth     |
+|     207 | three idiots         | chetan bhagat   |
+|     203 | god of small things  | aruhthati roy   |
+|     204 | shadow lines         | amitav shosh    |
+|     205 | fasting,feasting     | anita desai     |
+|     208 | train to pakistan    | khushwant singh |
+|     209 | the company of women | khushwant singh |
+|     210 | dear kitty           | anne frank      |
++---------+----------------------+-----------------+
+11 rows in set (0.00 sec)

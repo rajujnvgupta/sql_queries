@@ -1,0 +1,270 @@
+CS207 DBMS LAB.
+    
+   Database1-> Given below the database schema for a customer-sale scenario.
+
+#1
+    create the tables with the appropriate integrity constraints.
+    
+
+#2
+    insert sufficient record into table.
+
+   CUSTOMER TABLE
+  +---------+------------------+
+| cust_id | cust_name        |
++---------+------------------+
+|      80 | the_transporter  |
+|      81 | harrypotter      |
+|      82 | jasonstathan     |
+|      84 | raj_singhaniya   |
+|      83 | preetam          |
+|      85 | raj_singhaniya   |
+|      86 | king_kong        |
+|      87 | drakula          |
+|      88 | kajol_agrawal    |
+|      89 | kristian_stibert |
+|      90 | karan            |
+|      91 | karan            |
++---------+------------------+
+12 rows in set (0.00 sec)
+
+
+         ITEM TABLE
++---------+------------+-------+
+| item_id | item_name  | price |
++---------+------------+-------+
+|     100 | basketball |   200 |
+|     101 | bat        |   200 |
+|     102 | honda      |  4000 |
+|     103 | marcides   |  5000 |
+|     104 | bently     |  6000 |
+|     105 | jaguar     |  4000 |
+|     106 | bolarro    |  3000 |
+|     107 | hondacity  |  4000 |
+|     108 | dustor     |   400 |
+|     109 | indica     |  4500 |
+|     110 | spicejet   |   450 |
+|     111 | kingfisher |  6500 |
++---------+------------+-------+
+12 rows in set (0.00 sec)
+     
+
+                 SALE TABLE
++---------+------------+---------+----------+---------+
+| bill_no | bill_date  | item_id | qty_sold | cust_id |
++---------+------------+---------+----------+---------+
+|       1 | 2018-01-01 |     107 |       12 |      80 |
+|       2 | 2018-01-02 |     104 |       13 |      81 |
+|       3 | 2018-01-03 |     107 |       14 |      80 |
+|       4 | 2018-01-04 |     105 |       12 |      83 |
+|       5 | 2018-01-05 |     108 |       13 |      91 |
+|       6 | 2018-01-06 |     101 |       14 |      90 |
+|       7 | 2018-01-06 |     100 |       25 |      85 |
+|       8 | 2018-01-06 |     106 |       13 |      84 |
+|       9 | 2018-01-06 |     106 |       45 |      85 |
+|      10 | 2018-01-07 |     110 |       27 |      81 |
+|      11 | 2018-01-07 |     111 |       13 |      86 |
+|      12 | 2018-01-07 |     102 |       45 |      82 |
+|      13 | 2018-01-08 |     102 |       27 |      86 |
+|      14 | 2018-01-08 |     103 |       13 |      90 |
+|      15 | 2018-01-08 |     107 |       23 |      85 |
++---------+------------+---------+----------+---------+
+15 rows in set (0.00 sec)
+      
+
+#3
+        List all the bills for the current date with the customer names and
+        item number.
+#ANSWER  
+        select s.bill_no , c.cust_name , s.item_id from sale s inner join 
+        customer c on s.cust_id=c.cust_id where date="2018-01-08";
+
+#output
+
++---------+----------------+---------+
+| bill_no | cust_name      | item_id |
++---------+----------------+---------+
+|      15 | raj_singhaniya |     107 |
+|      13 | king_kong      |     102 |
+|      14 | karan          |     103 |
++---------+----------------+---------+
+3 rows in set (0.00 sec)
+
+
+#4
+          Create a view which lists the daily sales date wise for last one week ?
+#ANSWER1
+         create view last_week_sale_view2 as select bill_no,bill_date,item_id,cust_id 
+         from sale where bill_date>="2018-01-01" and bill_date<="2018-01-07";
+
+#ANSWER2 
+         create view last_week_sale_view as select bill_no,bill_date,item_id,cust_id 
+         from sale where bill_date in  ("2018-01-01","2018-01-02","2018-01-03","2018-01-04","2018-01-05","2018-01-06","2018-01-07");
+
+
+#both query give same output
+
++---------+------------+---------+---------+
+| bill_no | bill_date  | item_id | cust_id |
++---------+------------+---------+---------+
+|       1 | 2018-01-01 |     107 |      80 |
+|       2 | 2018-01-02 |     104 |      81 |
+|       3 | 2018-01-03 |     107 |      80 |
+|       4 | 2018-01-04 |     105 |      83 |
+|       5 | 2018-01-05 |     108 |      91 |
+|       6 | 2018-01-06 |     101 |      90 |
+|       7 | 2018-01-06 |     100 |      85 |
+|       8 | 2018-01-06 |     106 |      84 |
+|       9 | 2018-01-06 |     106 |      85 |
+|      10 | 2018-01-07 |     110 |      81 |
+|      11 | 2018-01-07 |     111 |      86 |
+|      12 | 2018-01-07 |     102 |      82 |
++---------+------------+---------+---------+
+
+
+#5
+        list the total bill detail with the quantity sold, price of the item and the
+        final amount ?
+#ANSWER 
+        select s.bill_no , s.qty_sold, i.price ,s.qty_sold*i.price from sale s 
+        inner join item i on s.item_id=i.item_id;
+
+#output
+
++---------+----------+-------+--------------------+
+| bill_no | qty_sold | price | s.qty_sold*i.price |
++---------+----------+-------+--------------------+
+|       1 |       12 |  4000 |              48000 |
+|       2 |       13 |  6000 |              78000 |
+|       3 |       14 |  4000 |              56000 |
+|       4 |       12 |  4000 |              48000 |
+|       5 |       13 |   400 |               5200 |
+|       6 |       14 |   200 |               2800 |
+|       7 |       25 |   200 |               5000 |
+|       8 |       13 |  3000 |              39000 |
+|       9 |       45 |  3000 |             135000 |
+|      10 |       27 |   450 |              12150 |
+|      11 |       13 |  6500 |              84500 |
+|      12 |       45 |  4000 |             180000 |
+|      13 |       27 |  4000 |             108000 |
+|      14 |       13 |  5000 |              65000 |
+|      15 |       23 |  4000 |              92000 |
++---------+----------+-------+--------------------+
+15 rows in set (0.00 sec)
+
+#6
+         Create a view which lists out the bill no, bill_date ,cust_id, item_id
+         price qty_sold, amount ?
+#ANSWER
+         create view sale_detail_view as select s.bill_no ,s.bill_date ,s.cust_id ,
+         i.price ,s.qty_sold ,i.price*s.qty_sold from sale s inner join item i on 
+         i.item_id=s.item_id;
+#output
+
++---------+------------+---------+-------+----------+--------------------+
+| bill_no | bill_date  | cust_id | price | qty_sold | i.price*s.qty_sold |
++---------+------------+---------+-------+----------+--------------------+
+|       1 | 2018-01-01 |      80 |  4000 |       12 |              48000 |
+|       2 | 2018-01-02 |      81 |  6000 |       13 |              78000 |
+|       3 | 2018-01-03 |      80 |  4000 |       14 |              56000 |
+|       4 | 2018-01-04 |      83 |  4000 |       12 |              48000 |
+|       5 | 2018-01-05 |      91 |   400 |       13 |               5200 |
+|       6 | 2018-01-06 |      90 |   200 |       14 |               2800 |
+|       7 | 2018-01-06 |      85 |   200 |       25 |               5000 |
+|       8 | 2018-01-06 |      84 |  3000 |       13 |              39000 |
+|       9 | 2018-01-06 |      85 |  3000 |       45 |             135000 |
+|      10 | 2018-01-07 |      81 |   450 |       27 |              12150 |
+|      11 | 2018-01-07 |      86 |  6500 |       13 |              84500 |
+|      12 | 2018-01-07 |      82 |  4000 |       45 |             180000 |
+|      13 | 2018-01-08 |      86 |  4000 |       27 |             108000 |
+|      14 | 2018-01-08 |      90 |  5000 |       13 |              65000 |
+|      15 | 2018-01-08 |      85 |  4000 |       23 |              92000 |
++---------+------------+---------+-------+----------+--------------------+
+15 rows in set (0.00 sec)
+
+#7
+        List the details of the customer who have bought a product which has a 
+        price>200 ?
+#ANSWER
+        select distinct c.cust_id , c.cust_name from customer c inner join sale s on 
+        s.cust_id=s.cust_id inner join item i on i.item_id=s.item_id where 
+        i.price > 200 order by cust_id;
+#output
+
++---------+------------------+
+| cust_id | cust_name        |
++---------+------------------+
+|      80 | the_transporter  |
+|      81 | harrypotter      |
+|      82 | jasonstathan     |
+|      83 | preetam          |
+|      84 | raj_singhaniya   |
+|      85 | raj_singhaniya   |
+|      86 | king_kong        |
+|      87 | drakula          |
+|      88 | kajol_agrawal    |
+|      89 | kristian_stibert |
+|      90 | karan            |
+|      91 | karan            |
++---------+------------------+
+12 rows in set (0.00 sec)
+
+#8
+        Give a list of products bought by a customer having cust_id 80 ?
+#ANSWER
+        select i.item_id ,i.item_name ,count(i.item_id)from item i inner join sale s 
+        on s.item_id=i.item_id where cust_id=80 group by i.item_id ,i.item_name;
+#output
+
++---------+-----------+------------------+
+| item_id | item_name | count(i.item_id) |
++---------+-----------+------------------+
+|     107 | hondacity |                2 |
++---------+-----------+------------------+
+1 row in set (0.00 sec)
+
+#9
+        Give a count of how many products have been bought by each customer ?
+#ANSWER
+        select distinct c.cust_id ,c.cust_name ,sum(s.qty_sold) from customer 
+        c inner join sale s on s.cust_id=c.cust_id inner join item i on 
+        i.item_id=s.item_id group by c.cust_id , c.cust_name;
+#output
+
++---------+-----------------+-----------------+
+| cust_id | cust_name       | sum(s.qty_sold) |
++---------+-----------------+-----------------+
+|      80 | the_transporter |              26 |
+|      81 | harrypotter     |              40 |
+|      82 | jasonstathan    |              45 |
+|      83 | preetam         |              12 |
+|      84 | raj_singhaniya  |              13 |
+|      85 | raj_singhaniya  |              93 |
+|      86 | king_kong       |              40 |
+|      90 | karan           |              27 |
+|      91 | karan           |              13 |
++---------+-----------------+-----------------+
+9 rows in set (0.00 sec)
+
+#10
+        List the item details which are sold as of today ?
+#ANSWER
+        select i.item_id , i.item_name , i.price from item i inner join sale s 
+        on i.item_id=s.item_id where s.bill_date ="2018-01-08";
+#output
+
++---------+-----------------+-----------------+
+| cust_id | cust_name       | sum(s.qty_sold) |
++---------+-----------------+-----------------+
+|      80 | the_transporter |              26 |
+|      81 | harrypotter     |              40 |
+|      82 | jasonstathan    |              45 |
+|      83 | preetam         |              12 |
+|      84 | raj_singhaniya  |              13 |
+|      85 | raj_singhaniya  |              93 |
+|      86 | king_kong       |              40 |
+|      90 | karan           |              27 |
+|      91 | karan           |              13 |
++---------+-----------------+-----------------+
+9 rows in set (0.00 sec)
+ 

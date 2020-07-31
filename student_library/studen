@@ -1,0 +1,25 @@
+#student table
+
++---------+----------------+
+| stud_no | stud_name      |
++---------+----------------+
+|      10 | preetam        |
+|      11 | raju           |
+|      13 | sita           |
+|      14 | gita           |
+|      15 | rani           |
+|      16 | karan          |
+|      17 | akash          |
+|      18 | mohit          |
+|      19 | manish         |
+|      20 | shradha_kapoor |
+|      21 | preetam        |
+|      22 | raja           |
+|      23 | karan          |
+|      24 | anand          |
+|      25 | abhijeet       |
+|      26 | aditya         |
++---------+----------------+
+16 rows in set (0.00 sec)
+
+
